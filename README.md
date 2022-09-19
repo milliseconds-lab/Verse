@@ -25,15 +25,6 @@ Node.js Express Web Application 개발 방식에 대하여 알아보겠습니다
 /database
 ```
 
-### Server - Restful API
-
-**Verse** 사용자 / 관리자에서 사용되는 Restful API 구축
-
-[경로]
-```
-/app
-```
-
 ### Web Publishing
 
 **Verse** 사용자 / 관리자에서 사용되는 화면의 HTML, CSS, JavaScript 코딩 작업
@@ -43,20 +34,12 @@ Node.js Express Web Application 개발 방식에 대하여 알아보겠습니다
 /publishing
 ```
 
-### Server - Admin
-
-**Verse** 관리자용 웹앱 제작
-
-[경로]
-```
-/app
-```
-
-### Client
-
-**Verse** 사용자용 웹앱 제작
+### Web Application
+- Restful API : **Verse** 사용자 / 관리자에서 사용되는 Restful API 구축
+- Admin : **Verse** 관리자용 웹앱 제작
+- Client : **Verse** 사용자용 웹앱 제작
 
 [경로]
 ```
-/app
+/application
 ```

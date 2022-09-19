@@ -31,7 +31,7 @@ Node.js Express Web Application 개발 방식에 대하여 알아보겠습니다
 
 [경로]
 ```
-/server
+/app
 ```
 
 ### Web Publishing
@@ -49,7 +49,7 @@ Node.js Express Web Application 개발 방식에 대하여 알아보겠습니다
 
 [경로]
 ```
-/server
+/app
 ```
 
 ### Client
@@ -58,5 +58,5 @@ Node.js Express Web Application 개발 방식에 대하여 알아보겠습니다
 
 [경로]
 ```
-/client
+/app
 ```

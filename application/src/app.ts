@@ -1,7 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express'
 
 require('express-async-errors')
-import createError from 'http-errors'
 import path from 'path'
 import cookieParser from 'cookie-parser'
 import morgan from 'morgan'
@@ -97,15 +96,9 @@ class App {
     this.app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs))
 
     // Error
-    this.app.use(
-      (
-        req: express.Request,
-        res: express.Response,
-        next: express.NextFunction
-      ) => {
-        next(createError(404))
-      }
-    )
+    this.app.use((req: express.Request, res: express.Response) => {
+      res.render('www/error/notfound')
+    })
 
     this.app.use((err: any, req: express.Request, res: express.Response) => {
       if (
@@ -139,7 +132,7 @@ class App {
     res.locals.message = err.message
     res.locals.error = req.app.get('env') === 'development' ? err : {}
     res.status(err.status || 500)
-    res.render('error')
+    res.render('www/error')
   }
 }
 

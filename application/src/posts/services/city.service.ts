@@ -9,6 +9,7 @@ export default class CityService {
       .getRepository(CityEntity)
       .createQueryBuilder('city')
       .where('city.id = :id', { id })
+    return query.getOne()
   }
 
   public getCityList(search?: string, offset?: number, limit?: number) {

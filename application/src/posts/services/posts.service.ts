@@ -9,7 +9,6 @@ export default class PostsService {
       .getRepository(PostsEntity)
       .createQueryBuilder('posts')
       .where('posts.id = :id', { id })
-
     return query.getOne()
   }
 

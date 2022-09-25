@@ -2,9 +2,9 @@ import express, { Request, Response } from 'express'
 
 const router = express.Router()
 
-/* ---- Client ---- */
-router.get('/post', (req: Request, res: Response) => {
-  res.render('www/post')
+/* ---- Admin - Main ---- */
+router.get('/', (req: Request, res: Response) => {
+  res.render('admin/main')
 })
 
 export default router

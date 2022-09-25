@@ -45,6 +45,21 @@ export default class UserRepository {
     return query.getCount()
   }
 
+  public async login(id: string, password: string) {
+    let user = await dataSource.getRepository(UsersEntity).findOne({
+      where: { user_id: id }
+    })
+    // console.log(passwordHash(password))
+    if (!user) {
+      return Promise.reject('No such user_id')
+    }
+    if (user.password === passwordHash(password)) {
+      return Promise.resolve(user)
+    } else {
+      return Promise.reject('Password not match')
+    }
+  }
+
   public createUser(
     userId: string,
     password: string,

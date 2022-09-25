@@ -19,6 +19,8 @@ CREATE TABLE `Pictures` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '',
   `stored_name` varchar(255) NOT NULL DEFAULT '',
+  `stored_path` varchar(255) DEFAULT NULL,
+  `mime_type` varchar(255) NOT NULL,
   `width` int DEFAULT NULL,
   `height` int DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,

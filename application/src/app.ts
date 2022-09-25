@@ -25,6 +25,12 @@ const sessionDBOptions = {
   password: config.DOMAIN_MYSQL_PASSWORD
 }
 
+declare module 'express-session' {
+  export interface SessionData {
+    administrator: { [key: string]: any }
+  }
+}
+
 class App {
   public app: express.Application
   public APP_SECRET = config.APP_SECRET

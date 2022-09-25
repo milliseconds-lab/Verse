@@ -22,6 +22,9 @@ export default class PicturesRepository {
     let picture = new PicturesEntity()
     picture.name = name
     picture.stored_name = storedName
+    picture.stored_path = storedPath
+    picture.url = url
+    picture.mime_type = mimeType
     return picture.save()
   }
 

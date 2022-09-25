@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express'
 
 const router = express.Router()
 
-/* ---- Client ---- */
+/* ---- Client - Contact ---- */
 router.get('/contact', (req: Request, res: Response) => {
   res.render('www/contact')
 })

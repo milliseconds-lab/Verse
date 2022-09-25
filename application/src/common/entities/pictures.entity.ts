@@ -12,6 +12,18 @@ export default class PicturesEntity extends CoreEntity {
   @IsString()
   stored_name: string
 
+  @Column({ type: 'varchar', nullable: true, default: null })
+  @IsString()
+  stored_path: string
+
+  @Column({ type: 'varchar', nullable: false })
+  @IsString()
+  mime_type: string
+
+  @Column({ type: 'varchar', nullable: true })
+  @IsString()
+  url: string
+
   @Column({ type: 'int', nullable: true })
   @IsNumber()
   @IsOptional()

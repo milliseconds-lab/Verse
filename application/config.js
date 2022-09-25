@@ -6,8 +6,8 @@ exports.default = {
   DOMAIN_MYSQL_TYPE: 'mysql',
   DOMAIN_MYSQL_HOST: '127.0.0.1',
   DOMAIN_MYSQL_PORT: 3306,
-  DOMAIN_MYSQL_DB: 'verse-ready',
+  DOMAIN_MYSQL_DB: 'verse',
   DOMAIN_MYSQL_USER: 'root',
   DOMAIN_MYSQL_PASSWORD: 'root',
-  DOMAIN_MYSQL_SESSION_DB: 'verse-ready-session',
+  DOMAIN_MYSQL_SESSION_DB: 'verse-session'
 }

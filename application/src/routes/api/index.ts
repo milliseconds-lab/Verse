@@ -1,6 +1,6 @@
 import { Application } from 'express'
 import archive from './archive'
-import posts from "./posts";
+import posts from './posts'
 
 export default class APIRouter {
   public routes(basePath: string, app: Application) {

@@ -1,5 +1,6 @@
 import { DataSource } from 'typeorm'
 import config from '../config'
+import App from './app'
 import UsersEntity from './users/entities/users.entity'
 import PicturesEntity from './common/entities/pictures.entity'
 import RequestEntity from './request/entities/request.entity'
@@ -17,7 +18,7 @@ export const dataSource = new DataSource({
   username: config.DOMAIN_MYSQL_USER,
   password: config.DOMAIN_MYSQL_PASSWORD,
   synchronize: true,
-  logging: false,
+  logging: true,
   entities: [
     UsersEntity,
     PicturesEntity,
@@ -27,5 +28,6 @@ export const dataSource = new DataSource({
     TypeArticlesEntity,
     CityEntity,
     PostsEntity
-  ]
+  ],
+  migrations: [`${App.PROJECT_DIR}/build/migration/**/*.js`]
 })

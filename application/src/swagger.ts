@@ -11,7 +11,7 @@ export const options: Options = {
     host: 'localhost:3000',
     basePath: '/api'
   },
-  apis: ['/routes/**/*.js', './swagger/*', './models/**/*.js']
+  apis: ['/routes/**/*.js']
 }
 
 const specs = swaggerJSDoc(options)

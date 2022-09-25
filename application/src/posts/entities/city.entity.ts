@@ -4,7 +4,7 @@ import { CoreEntity } from '../../common/entities/core.entity'
 
 @Entity({ name: 'City' })
 export default class CityEntity extends CoreEntity {
-  @Column({ type: 'varchar', nullable: false, default: '' })
+  @Column({ type: 'varchar', length: 45, nullable: false, default: '' })
   @IsString()
   name: string
 }

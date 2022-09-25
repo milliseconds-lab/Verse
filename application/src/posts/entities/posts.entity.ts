@@ -28,7 +28,12 @@ export default class PostsEntity extends CoreEntity {
     PUBLIC: 'public'
   }
 
-  @Column({ type: 'varchar', nullable: false, default: PostsEntity.TYPE.IMAGE })
+  @Column({
+    type: 'varchar',
+    length: 20,
+    nullable: false,
+    default: PostsEntity.TYPE.IMAGE
+  })
   @IsString()
   type: string
 
@@ -71,6 +76,7 @@ export default class PostsEntity extends CoreEntity {
 
   @Column({
     type: 'varchar',
+    length: 20,
     nullable: false,
     default: PostsEntity.STATUS.PRIVATE
   })

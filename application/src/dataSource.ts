@@ -3,11 +3,11 @@ import config from '../config'
 import UsersEntity from './users/entities/users.entity'
 import PicturesEntity from './common/entities/pictures.entity'
 import RequestEntity from './request/entities/request.entity'
+import CityEntity from './posts/entities/city.entity'
 import TypeImagesEntity from './posts/entities/typeImages.entity'
 import TypeVideosEntity from './posts/entities/typeVideos.entity'
 import TypeArticlesEntity from './posts/entities/typeArticles.entity'
 import PostsEntity from './posts/entities/posts.entity'
-import CityEntity from './posts/entities/city.entity'
 
 export const dataSource = new DataSource({
   type: config.DOMAIN_MYSQL_TYPE,
@@ -22,10 +22,11 @@ export const dataSource = new DataSource({
     UsersEntity,
     PicturesEntity,
     RequestEntity,
+    CityEntity,
     TypeImagesEntity,
     TypeVideosEntity,
     TypeArticlesEntity,
-    CityEntity,
     PostsEntity
-  ]
+  ],
+  migrations: []
 })

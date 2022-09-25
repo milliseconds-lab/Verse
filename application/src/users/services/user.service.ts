@@ -4,7 +4,7 @@ import { dataSource } from '../../dataSource'
 import UsersEntity from '../entities/users.entity'
 
 @Service()
-export default class UserRepository {
+export default class UserService {
   public getUserById(id: number) {
     const query = dataSource
       .getRepository(UsersEntity)

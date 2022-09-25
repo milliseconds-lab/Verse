@@ -1,7 +1,9 @@
+import { Service } from 'typedi'
 import { dataSource } from '../../dataSource'
 import RequestEntity from '../entities/request.entity'
 
-export default class RequestRepository {
+@Service()
+export default class RequestService {
   public getRequestById(id: number) {
     const query = dataSource
       .getRepository(RequestEntity)

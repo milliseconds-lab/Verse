@@ -10,9 +10,9 @@ import session from 'express-session'
 
 import config from '../config'
 import { APIError } from './routes/api/APIResult'
+import APIRouter from './routes/api'
 import WWWRouter from './routes/www'
 import AdminRouter from './routes/admin'
-import APIRouter from './routes/api'
 import { swaggerUI, specs } from './swagger'
 
 const MySQLStore = require('express-mysql-session')(session)

@@ -1,7 +1,9 @@
+import { Service } from 'typedi'
 import { dataSource } from '../../dataSource'
 import PostsEntity from '../entities/posts.entity'
 
-export default class PostsRepository {
+@Service()
+export default class PostsService {
   public getPostById(id: number) {
     const query = dataSource
       .getRepository(PostsEntity)

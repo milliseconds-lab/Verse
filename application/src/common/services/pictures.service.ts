@@ -1,9 +1,11 @@
 import * as fs from 'fs'
+import { Service } from 'typedi'
 import config from '../../../config'
 import { dataSource } from '../../dataSource'
 import PicturesEntity from '../entities/pictures.entity'
 
-export default class PicturesRepository {
+@Service()
+export default class PicturesService {
   public getPicture(id: number) {
     return dataSource.getRepository(PicturesEntity).findOne({ where: { id } })
   }

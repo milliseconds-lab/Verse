@@ -4,27 +4,13 @@ module.exports = {
   rules: {
     semi: ['error', 'never'],
     'max-len': ['error', { code: 120 }],
-    // 'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     quotes: ['error', 'single', { avoidEscape: true }],
-    // 'jsx-a11y/label-has-associated-control': [
-    //   'error',
-    //   { required: { some: ['nesting', 'id'] } }
-    // ],
-    // 'jsx-a11y/label-has-for': [
-    //   'error',
-    //   { required: { some: ['nesting', 'id'] } }
-    // ],
     'jsx-quotes': ['error', 'prefer-single'],
     'linebreak-style': 0,
     'import/prefer-default-export': 0,
     'import/no-unresolved': 'off',
-    // 'import/extensions': [1, 'never'],
     'comma-dangle': ['error', 'never'],
     'no-param-reassign': 0,
-    // 'react/jsx-filename-extension': [
-    //   'error',
-    //   { extensions: ['.js', '.jsx', '.ts', '.tsx'] }
-    // ],
     'react/prop-types': 0,
     'react/jsx-closing-bracket-location': 0,
     'react/jsx-one-expression-per-line': 0,

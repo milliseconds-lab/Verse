@@ -1,26 +1,23 @@
 import {
   BaseEntity,
-  Column,
   CreateDateColumn,
-  Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from 'typeorm'
+import { IsDate, IsNumber } from 'class-validator'
 
-@Entity({ name: 'City' })
-export default class City extends BaseEntity {
+export class CoreEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
-  ID!: number
-
-  @Column({ type: 'varchar', nullable: false, default: '' })
-  name!: string
+  @IsNumber()
+  id: number
 
   @CreateDateColumn({
     type: 'timestamp',
     nullable: false,
     default: () => 'CURRENT_TIMESTAMP(6)'
   })
-  created_at!: Date
+  @IsDate()
+  created_at: Date
 
   @UpdateDateColumn({
     type: 'timestamp',
@@ -28,5 +25,13 @@ export default class City extends BaseEntity {
     default: () => 'CURRENT_TIMESTAMP(6)',
     onUpdate: 'CURRENT_TIMESTAMP(6)'
   })
-  updated_at!: Date
+  @IsDate()
+  updated_at: Date
+
+  constructor(id?: number) {
+    super()
+    if (id) {
+      this.id = id
+    }
+  }
 }

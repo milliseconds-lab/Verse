@@ -52,9 +52,7 @@ export default class PicturesService {
   }
 
   public removePicture(picture: PicturesEntity) {
-    fs.unlink(`${config.PROJECT_DIR}/${picture.stored_name}`, (res) => {
-      console.log(res)
-    })
+    fs.unlink(`${config.PROJECT_DIR}/${picture.stored_name}`, (res) => {})
     return dataSource.getRepository(PicturesEntity).remove(picture)
   }
 }

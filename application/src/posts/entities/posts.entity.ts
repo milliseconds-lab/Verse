@@ -37,7 +37,11 @@ export default class PostsEntity extends CoreEntity {
   @IsString()
   type: string
 
-  @ManyToOne(() => PicturesEntity, { onDelete: 'SET NULL', cascade: true })
+  @ManyToOne(() => PicturesEntity, {
+    onDelete: 'SET NULL',
+    onUpdate: 'CASCADE',
+    cascade: true
+  })
   @JoinColumn({ name: 'thumbnail' })
   thumbnail: PicturesEntity
 
@@ -50,17 +54,29 @@ export default class PostsEntity extends CoreEntity {
   @JoinTable({ name: 'Posts_City' })
   city: CityEntity
 
-  @ManyToOne(() => TypeImagesEntity, { onDelete: 'SET NULL', cascade: true })
+  @ManyToOne(() => TypeImagesEntity, {
+    onDelete: 'SET NULL',
+    onUpdate: 'CASCADE',
+    cascade: true
+  })
   @JoinColumn({ name: 'image_content' })
   @IsOptional()
   image_content: TypeImagesEntity
 
-  @ManyToOne(() => TypeVideosEntity, { onDelete: 'SET NULL', cascade: true })
+  @ManyToOne(() => TypeVideosEntity, {
+    onDelete: 'SET NULL',
+    onUpdate: 'CASCADE',
+    cascade: true
+  })
   @JoinColumn({ name: 'video_content' })
   @IsOptional()
   video_content: TypeVideosEntity
 
-  @ManyToOne(() => TypeArticlesEntity, { onDelete: 'SET NULL', cascade: true })
+  @ManyToOne(() => TypeArticlesEntity, {
+    onDelete: 'SET NULL',
+    onUpdate: 'CASCADE',
+    cascade: true
+  })
   @JoinColumn({ name: 'article_content' })
   @IsOptional()
   article_content: TypeArticlesEntity

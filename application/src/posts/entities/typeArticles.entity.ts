@@ -5,7 +5,11 @@ import PicturesEntity from '../../common/entities/pictures.entity'
 
 @Entity({ name: 'Type_articles' })
 export default class TypeArticlesEntity extends CoreEntity {
-  @ManyToOne(() => PicturesEntity, { onDelete: 'SET NULL', cascade: true })
+  @ManyToOne(() => PicturesEntity, {
+    onDelete: 'SET NULL',
+    onUpdate: 'CASCADE',
+    cascade: true
+  })
   @JoinColumn({ name: 'cover' })
   cover: PicturesEntity
 

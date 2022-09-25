@@ -9,7 +9,11 @@ export default class TypeVideosEntity extends CoreEntity {
   @IsString()
   video_id: string
 
-  @ManyToOne(() => PicturesEntity, { onDelete: 'SET NULL', cascade: true })
+  @ManyToOne(() => PicturesEntity, {
+    onDelete: 'SET NULL',
+    onUpdate: 'CASCADE',
+    cascade: true
+  })
   @JoinColumn({ name: 'poster' })
   @IsOptional()
   poster: PicturesEntity

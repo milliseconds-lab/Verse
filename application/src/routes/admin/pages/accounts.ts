@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express'
 import { Container } from 'typedi'
-import UserRepository from '../../../users/repositories/user.repository'
+import UserService from '../../../users/services/user.service'
 
 const router = express.Router()
 
@@ -13,7 +13,7 @@ router.post('/login', async (req: Request, res: Response) => {
   const {
     body: { id, password }
   } = req
-  const repository = Container.get(UserRepository)
+  const repository = Container.get(UserService)
   try {
     let administrator = await repository.login(id, password)
     if (administrator !== undefined) {

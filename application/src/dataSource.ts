@@ -17,8 +17,8 @@ export const dataSource = new DataSource({
   database: config.DOMAIN_MYSQL_DB,
   username: config.DOMAIN_MYSQL_USER,
   password: config.DOMAIN_MYSQL_PASSWORD,
-  synchronize: true,
-  logging: true,
+  synchronize: false,
+  logging: false,
   entities: [
     UsersEntity,
     PicturesEntity,

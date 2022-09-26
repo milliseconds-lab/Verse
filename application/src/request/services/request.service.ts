@@ -52,6 +52,7 @@ export default class RequestService {
     request.phone = phone
     request.company = company
     request.message = message
+    return request.save()
   }
 
   public deleteRequest(id: number) {

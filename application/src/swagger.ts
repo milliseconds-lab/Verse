@@ -6,12 +6,19 @@ export const options: Options = {
     info: {
       title: 'Verse API',
       version: '1.0',
-      description: 'Verse API Specifications'
+      description: 'Verse API Specifications',
+      license: {
+        name: 'MIT'
+      },
+      contact: {
+        name: 'theo',
+        email: 'theo@milliseconds.studio'
+      }
     },
     host: 'localhost:3000',
     basePath: '/api'
   },
-  apis: ['/routes/**/*.js']
+  apis: ['/routes/api/**/*.js']
 }
 
 const specs = swaggerJSDoc(options)

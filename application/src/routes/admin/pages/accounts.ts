@@ -13,9 +13,9 @@ router.post('/login', async (req: Request, res: Response) => {
   const {
     body: { id, password }
   } = req
-  const repository = Container.get(UserService)
+  const service = Container.get(UserService)
   try {
-    let administrator = await repository.login(id, password)
+    let administrator = await service.login(id, password)
     if (administrator !== undefined) {
       req.session.administrator = {
         userId: administrator.user_id,

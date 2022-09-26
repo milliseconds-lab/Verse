@@ -10,6 +10,26 @@ router.get('/requests', async (req: Request, res: Response) => {
   res.json(APIResult([]))
 })
 
+/**
+ * @swagger
+ *  /product:
+ *    get:
+ *      tags:
+ *      - product
+ *      description: 모든 제품 조회
+ *      produces:
+ *      - application/json
+ *      parameters:
+ *        - in: query
+ *          name: category
+ *          required: false
+ *          schema:
+ *            type: integer
+ *            description: 카테고리
+ *      responses:
+ *       200:
+ *        description: 제품 조회 성공
+ */
 router.post('/request', async (req: Request, res: Response) => {
   let { name, email, phone, company, message } = req.body
   const service = Container.get(RequestService)
@@ -73,11 +93,10 @@ router.delete('/request/:request_id', (req: Request, res: Response) => {
  */
 /**
  * @swagger
- *  paths:
  *  /request:
  *    post:
  *      summary: Creates a new request
- *      tags: [Request]
+ *      tags: - request
  *      requestBody:
  *        required: true
  *        content:

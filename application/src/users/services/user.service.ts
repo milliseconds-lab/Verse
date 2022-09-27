@@ -49,7 +49,6 @@ export default class UserService {
     let user = await dataSource.getRepository(UsersEntity).findOne({
       where: { user_id: id }
     })
-    // console.log(passwordHash(password))
     if (!user) {
       return Promise.reject('No such user_id')
     }

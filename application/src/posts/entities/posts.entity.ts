@@ -52,6 +52,7 @@ export default class PostsEntity extends CoreEntity {
   @ManyToOne(() => CityEntity, (CityEntity) => CityEntity.id)
   @JoinColumn({ name: 'city' })
   @JoinTable({ name: 'Posts_City' })
+  @IsOptional()
   city: CityEntity
 
   @ManyToOne(() => TypeImagesEntity, {

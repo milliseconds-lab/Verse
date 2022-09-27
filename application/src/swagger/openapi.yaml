@@ -1,0 +1,90 @@
+openapi: '3.0.0'
+info:
+  version: 1.0.0
+  title: Verse API
+  description: Verse API Specifications
+  license:
+    name: MIT
+  contact:
+    name: theo
+    email: theo@milliseconds.studio
+servers:
+  - url: http://localhost:3000/api
+paths:
+  /request:
+    post:
+      summary: Creates a new request
+      tags:
+        - request
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Request'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                properties:
+                  success:
+                    type: boolean
+components:
+  parameters: null
+  schemas:
+    User:
+      type: object
+      required:
+        - user_id
+        - password
+        - name
+        - status
+      properties:
+        user_id:
+          type: string
+          description: 유저 아이디
+        password:
+          type: string
+          description: 유저 비밀번호
+        name:
+          type: string
+          description: 이름
+        nickname:
+          type: string
+          description: 별칭
+        email:
+          type: string
+          description: 이메일 주소
+        status:
+          type: number
+          description: 유저 상태 CLIENT - 0, OWNER - 1
+    Request:
+      type: object
+      required:
+        - name
+        - email
+        - phone
+        - company
+        - message
+      properties:
+        name:
+          type: string
+          description: 이름
+        email:
+          type: string
+          description: 이메일
+        phone:
+          type: string
+          description: 연락처 번호
+        company:
+          type: string
+          description: 회사
+        message:
+          type: string
+          description: 내용
+  responses:

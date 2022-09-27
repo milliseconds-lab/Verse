@@ -6,13 +6,14 @@ import cookieParser from 'cookie-parser'
 import morgan from 'morgan'
 import compression from 'compression'
 import session from 'express-session'
+import swaggerUI from 'swagger-ui-express'
+import YAML from 'yamljs'
 
 import config from '../config'
 import { APIError } from './routes/api/APIResult'
 import APIRouter from './routes/api'
 import WWWRouter from './routes/www'
 import AdminRouter from './routes/admin'
-import { swaggerUI, specs } from './swagger'
 
 const MySQLStore = require('express-mysql-session')(session)
 
@@ -93,7 +94,8 @@ class App {
     new AdminRouter().routes('/admin', this.app)
 
     // Swagger
-    this.app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs))
+    const swaggerSpecs = YAML.load(path.join(__dirname, '../build/swagger.yaml'))
+    this.app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpecs))
 
     // Error
     this.app.use((req: express.Request, res: express.Response) => {

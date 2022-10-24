@@ -5,11 +5,9 @@ import TypeArticlesEntity from '../entities/typeArticles.entity'
 @Service()
 export default class TypeArticlesService {
   public getTypeArticleById(id: number) {
-    const query = dataSource
+    return dataSource
       .getRepository(TypeArticlesEntity)
-      .createQueryBuilder('type_articles')
-      .where('type_articles.id = :id', { id })
-    return query.getOne()
+      .findOne({ where: { id } })
   }
 
   public createTypeArticle(title: string, overview: string, content: any) {

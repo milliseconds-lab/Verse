@@ -5,18 +5,14 @@ import RequestEntity from '../entities/request.entity'
 @Service()
 export default class RequestService {
   public getRequestById(id: number) {
-    const query = dataSource
-      .getRepository(RequestEntity)
-      .createQueryBuilder('request')
-      .where('request.id = :id', { id })
-    return query.getOne()
+    return dataSource.getRepository(RequestEntity).findOne({ where: { id } })
   }
 
   public getRequestList(search?: string, offset?: number, limit?: number) {
     const query = dataSource
       .getRepository(RequestEntity)
       .createQueryBuilder('request')
-      .addOrderBy('request.id', 'DESC')
+      .orderBy('request.id', 'DESC')
     if (search !== undefined) {
       query.where('request.name like :name', { name: `%${search}%` })
       query.orWhere('request.message like :message', { message: `%${search}%` })

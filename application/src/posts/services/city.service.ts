@@ -5,18 +5,18 @@ import CityEntity from '../entities/city.entity'
 @Service()
 export default class CityService {
   public getCityById(id: number) {
-    const query = dataSource
-      .getRepository(CityEntity)
-      .createQueryBuilder('city')
-      .where('city.id = :id', { id })
-    return query.getOne()
+    return dataSource.getRepository(CityEntity).findOne({ where: { id } })
+  }
+
+  public getCityByName(name: string) {
+    return dataSource.getRepository(CityEntity).findOne({ where: { name }})
   }
 
   public getCityList(search?: string, offset?: number, limit?: number) {
     const query = dataSource
       .getRepository(CityEntity)
       .createQueryBuilder('city')
-      .addOrderBy('city.id', 'DESC')
+      .orderBy('city.id', 'DESC')
     if (search !== undefined) {
       query.where('city.name like :name', { name: `%${search}%` })
     }
@@ -44,7 +44,13 @@ export default class CityService {
     return city.save()
   }
 
-  public deleteCity(id: string) {
+  public updateCity(id: number, name: string) {
+    return dataSource.getRepository(CityEntity).update(id, {
+      name
+    })
+  }
+
+  public deleteCity(id: number) {
     return dataSource.getRepository(CityEntity).delete(id)
   }
 }

@@ -10,18 +10,14 @@ import PostsEntity from '../entities/posts.entity'
 @Service()
 export default class PostsService {
   public getPostById(id: number) {
-    const query = dataSource
-      .getRepository(PostsEntity)
-      .createQueryBuilder('posts')
-      .where('posts.id = :id', { id })
-    return query.getOne()
+    return dataSource.getRepository(PostsEntity).findOne({ where: { id } })
   }
 
   public getPostsList(search?: string, offset?: number, limit?: number) {
     const query = dataSource
       .getRepository(PostsEntity)
       .createQueryBuilder('posts')
-      .addOrderBy('posts.id', 'DESC')
+      .orderBy('posts.id', 'DESC')
     if (search !== undefined) {
       query.where('posts.title like :title', { title: `%${search}%` })
     }
@@ -39,8 +35,14 @@ export default class PostsService {
     return query.getMany()
   }
 
-  public getPostsCount() {
-    return dataSource.getRepository(PostsEntity).count()
+  public getPostsCount(search?: string) {
+    const query = dataSource
+      .getRepository(PostsEntity)
+      .createQueryBuilder('posts')
+    if (search !== undefined) {
+      query.where('posts.title like :title', { title: `%${search}%` })
+    }
+    return query.getCount()
   }
 
   public createPost(

@@ -6,11 +6,7 @@ import UsersEntity from '../entities/users.entity'
 @Service()
 export default class UserService {
   public getUserById(id: number) {
-    const query = dataSource
-      .getRepository(UsersEntity)
-      .createQueryBuilder('users')
-      .where('users.id = :id', { id })
-    return query.getOne()
+    return dataSource.getRepository(UsersEntity).findOne({ where: { id } })
   }
 
   public getUsersList(search?: string, offset?: number, limit?: number) {

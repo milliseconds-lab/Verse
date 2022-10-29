@@ -5,17 +5,42 @@ import CityEntity from '../entities/city.entity'
 @Service()
 export default class CityService {
   public getCityById(id: number) {
-    return dataSource.getRepository(CityEntity).findOne({ where: { id } })
+    // return dataSource.getRepository(CityEntity).findOne({ where: { id } })
+    const query = dataSource
+      .getRepository(CityEntity)
+      .createQueryBuilder('city')
+      .select(['city.id', 'city.name'])
+      .where({ id })
+    return query.getOne()
+  }
+
+  public getPreviousCityById(id: number) {
+    const query = dataSource
+      .getRepository(CityEntity)
+      .createQueryBuilder('city')
+      .select(['city.id', 'city.name'])
+      .where('city.id < :id', { id })
+    return query.getOne()
+  }
+
+  public getNextCityById(id: number) {
+    const query = dataSource
+      .getRepository(CityEntity)
+      .createQueryBuilder('city')
+      .select(['city.id', 'city.name'])
+      .where('city.id > :id', { id })
+    return query.getOne()
   }
 
   public getCityByName(name: string) {
-    return dataSource.getRepository(CityEntity).findOne({ where: { name }})
+    return dataSource.getRepository(CityEntity).findOne({ where: { name } })
   }
 
   public getCityList(search?: string, offset?: number, limit?: number) {
     const query = dataSource
       .getRepository(CityEntity)
       .createQueryBuilder('city')
+      .select(['city.id', 'city.name'])
       .orderBy('city.id', 'DESC')
     if (search !== undefined) {
       query.where('city.name like :name', { name: `%${search}%` })

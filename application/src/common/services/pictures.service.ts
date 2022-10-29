@@ -1,12 +1,12 @@
-import * as fs from 'fs'
 import { Service } from 'typedi'
+import * as fs from 'fs'
 import config from '../../../config'
 import { dataSource } from '../../dataSource'
 import PicturesEntity from '../entities/pictures.entity'
 
 @Service()
 export default class PicturesService {
-  public getPicture(id: number) {
+  public getPictureById(id: number) {
     return dataSource.getRepository(PicturesEntity).findOne({ where: { id } })
   }
 
@@ -30,29 +30,39 @@ export default class PicturesService {
     return picture.save()
   }
 
-  public addUploadFile(uploadFiles: any, fieldName: string) {
-    // TODO :: S3 bucket 에 업로드 필요.
-    if (uploadFiles.length > 0) {
-      let imageFile = uploadFiles.find((file) => file.fieldname === fieldName)
-      if (imageFile !== undefined) {
-        let url = `${imageFile.destination}/${imageFile.filename}`
-        let idx = imageFile.destination.lastIndexOf('public/')
-        if (idx >= 0) {
-          url = url.substring(idx + 6)
-        }
-        return this.addPicture(
-          imageFile.originalname,
-          imageFile.filename,
-          imageFile.destination,
-          url,
-          imageFile.mimetype
-        )
-      }
+  /*
+   * local 경로에 업로드
+   */
+  // public addUploadFile(uploadFile: any) {
+  //   if (uploadFile !== undefined) {
+  //     let url = `${uploadFile.destination}/${uploadFile.filename}`
+  //     let idx = uploadFile.destination.lastIndexOf('public/')
+  //     if (idx >= 0) {
+  //       url = url.substring(idx + 6)
+  //     }
+  //     return this.addPicture(
+  //       uploadFile.originalname,
+  //       uploadFile.filename,
+  //       uploadFile.destination,
+  //       url,
+  //       uploadFile.mimetype
+  //     )
+  //   }
+  // }
+
+  /*
+   * S3 bucket 경로에 업로드
+   */
+  public addUploadFile(uploadFile: any) {
+    if (uploadFile !== undefined) {
+      const { originalname: name, key, location: url, mimetype } = uploadFile
+      const storedPath = config.S3_DIRECTORY
+      const storedName = key.replace(`${storedPath}/`, '')
+      return this.addPicture(name, storedName, storedPath, url, mimetype)
     }
   }
 
   public removePicture(picture: PicturesEntity) {
-    fs.unlink(`${config.PROJECT_DIR}/${picture.stored_name}`, (res) => {})
     return dataSource.getRepository(PicturesEntity).remove(picture)
   }
 }

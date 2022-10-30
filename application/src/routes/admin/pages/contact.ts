@@ -1,6 +1,6 @@
-import express, { Request, Response } from 'express'
+import { Router, Request, Response } from 'express'
 
-const router = express.Router()
+const router = Router()
 
 /* ---- Admin - Contact ---- */
 router.get('/contacts', (req: Request, res: Response) => {

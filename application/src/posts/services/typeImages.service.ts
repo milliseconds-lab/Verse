@@ -1,5 +1,6 @@
 import { Service } from 'typedi'
 import { dataSource } from '../../dataSource'
+import PicturesEntity from '../../common/entities/pictures.entity'
 import TypeImagesEntity from '../entities/typeImages.entity'
 
 @Service()
@@ -8,8 +9,13 @@ export default class TypeImagesService {
     return dataSource.getRepository(TypeImagesEntity).findOne({ where: { id } })
   }
 
-  public createTypeImage(title: string, description: string) {
+  public createTypeImage(
+    image: PicturesEntity,
+    title: string,
+    description: string
+  ) {
     let typeImage = new TypeImagesEntity()
+    typeImage.image = image
     typeImage.title = title
     typeImage.description = description
     return typeImage.save()

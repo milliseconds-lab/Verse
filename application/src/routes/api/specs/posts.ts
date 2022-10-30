@@ -1,21 +1,18 @@
-import express, { Request, Response } from 'express'
+import { Router, Request, Response } from 'express'
 import { Container } from 'typedi'
 import moment from 'moment'
 import UsersEntity from '../../../users/entities/users.entity'
 import PostsEntity from '../../../posts/entities/posts.entity'
-import TypeImagesEntity from '../../../posts/entities/typeImages.entity'
-import TypeVideosEntity from '../../../posts/entities/typeVideos.entity'
-import TypeArticlesEntity from '../../../posts/entities/typeArticles.entity'
 import PostsService from '../../../posts/services/posts.service'
 import PicturesService from '../../../common/services/pictures.service'
 import CityService from '../../../posts/services/city.service'
-// import TypeImagesService from '../../../posts/services/typeImages.service'
-// import TypeVideosService from '../../../posts/services/typeVideos.service'
-// import TypeArticlesService from '../../../posts/services/typeArticles.service'
+import TypeImagesService from '../../../posts/services/typeImages.service'
+import TypeVideosService from '../../../posts/services/typeVideos.service'
+import TypeArticlesService from '../../../posts/services/typeArticles.service'
 import { APIErrorResult, APIResult } from '../APIResult'
 import APIUtils from '../../../utils/APIUtils'
 
-const router = express.Router()
+const router = Router()
 
 enum MODE {
   NEW = 'new',
@@ -49,7 +46,7 @@ router.get('/posts/list', async (req: Request, res: Response) => {
     status
   )
   const total = await postsService.getPostsCount(undefined, status)
-  res.json(APIResult({ posts, total, page }))
+  return res.json(APIResult({ posts, total, page }))
 })
 
 router.post('/post/create', async (req: Request, res: Response) => {
@@ -63,33 +60,49 @@ router.post('/post/create', async (req: Request, res: Response) => {
     video_content,
     article_content
   } = await setPostsData(req.body)
+  if (type === undefined) {
+    return res.status(500).json(APIErrorResult('Please select a type.'))
+  }
+  if (thumbnail === undefined || thumbnail === null) {
+    return res.status(500).json(APIErrorResult('Please upload a thumbnail image.'))
+  }
+  if (title === undefined || title.trim() === '') {
+    return res.status(500).json(APIErrorResult('Please enter a title.'))
+  }
+  if (status === undefined) {
+    return res.status(500).json(APIErrorResult('Please select a status.'))
+  }
+  if (city === undefined) {
+    return res.status(500).json(APIErrorResult('Please select a city.'))
+  }
+  if (type === PostsEntity.TYPE.IMAGE && (image_content === undefined || image_content === null)) {
+    return res.status(500).json(APIErrorResult('Please enter image contents.'))
+  }
+  if (type === PostsEntity.TYPE.VIDEO && (video_content === undefined || video_content === null)) {
+    return res.status(500).json(APIErrorResult('Please enter video contents.'))
+  }
+  if (type === PostsEntity.TYPE.ARTICLE && (article_content === undefined || article_content === null)) {
+    return res.status(500).json(APIErrorResult('Please enter article contents.'))
+  }
   const postsService = Container.get(PostsService)
   try {
     let _image_content = null
     let _video_content = null
     let _article_content = null
     if (type === PostsEntity.TYPE.IMAGE) {
-      const typeImage = new TypeImagesEntity()
-      typeImage.image = image_content.image
-      typeImage.title = image_content.title
-      typeImage.description = image_content.description
-      _image_content = await typeImage.save()
+      const { image, title, description } = image_content
+      const typeImagesService = Container.get(TypeImagesService)
+      _image_content = await typeImagesService.createTypeImage(image, title, description)
     }
     if (type === PostsEntity.TYPE.VIDEO) {
-      const typeVideo = new TypeVideosEntity()
-      typeVideo.video_id = video_content.video_id
-      typeVideo.poster = video_content.poster
-      typeVideo.title = video_content.title
-      typeVideo.description = video_content.description
-      _video_content = await typeVideo.save()
+      const { video_id, poster, title, description } = video_content
+      const typeVideosService = Container.get(TypeVideosService)
+      _video_content = await typeVideosService.createTypeVideo(video_id, title, description, poster)
     }
     if (type === PostsEntity.TYPE.ARTICLE) {
-      const typeArticle = new TypeArticlesEntity()
-      typeArticle.cover = article_content.cover
-      typeArticle.title = article_content.title
-      typeArticle.overview = article_content.overview
-      typeArticle.content = article_content.content
-      _article_content = await typeArticle.save()
+      const { cover, title, overview, content } = article_content
+      const typeArticlesService = Container.get(TypeArticlesService)
+      _article_content = await typeArticlesService.createTypeArticle(cover, title, overview, content)
     }
     const post = await postsService.createPost(
       type,
@@ -101,9 +114,9 @@ router.post('/post/create', async (req: Request, res: Response) => {
       _video_content,
       _article_content
     )
-    res.json(APIResult({ id: post.id }))
+    return res.json(APIResult({ id: post.id }))
   } catch (error) {
-    res.status(500).json(APIErrorResult(error.message))
+    return res.status(500).json(APIErrorResult(error.message))
   }
 })
 
@@ -123,13 +136,12 @@ router.get('/post/:post_id', async (req: Request, res: Response) => {
       previous: previousPost,
       next: nextPost
     }
-    if (post) {
-      res.json(APIResult({ post, pagination }))
-    } else {
-      res.status(500).json(APIErrorResult('Post not found.'))
+    if (post !== undefined && post !== null) {
+      return res.json(APIResult({ post, pagination }))
     }
+    return res.status(500).json(APIErrorResult('Post not found.'))
   } catch (error) {
-    res.status(500).json(APIErrorResult(error.message))
+    return res.status(500).json(APIErrorResult(error.message))
   }
 })
 
@@ -138,14 +150,13 @@ router.patch('/post/:post_id', (req: Request, res: Response) => {
 })
 
 router.delete('/post/:post_id', async (req: Request, res: Response) => {
-  const { post_id } = req.params
-  const id = Number(post_id)
+  const id = APIUtils.numberOrThrow(Number(req.params.post_id))
   const postsService = Container.get(PostsService)
   try {
     await postsService.deletePost(id)
-    res.json(APIResult({ result: true }))
+    return res.json(APIResult({ result: true }))
   } catch (error) {
-    res.status(500).json(APIErrorResult(error.message))
+    return res.status(500).json(APIErrorResult(error.message))
   }
 })
 

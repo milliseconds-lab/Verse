@@ -19,8 +19,6 @@ export default class PostsService {
       .leftJoinAndSelect('posts.image_content', 'image_content')
       .leftJoinAndSelect('posts.video_content', 'video_content')
       .leftJoinAndSelect('posts.article_content', 'article_content')
-      .where({ id })
-      .andWhere('posts.status IN(:status)', { status })
       .select([
         'posts.id',
         'posts.type',
@@ -46,6 +44,8 @@ export default class PostsService {
         'posts.published_at',
         'posts.status'
       ])
+      .where({ id })
+      .andWhere('posts.status IN(:status)', { status })
     return query.getOne()
   }
 
@@ -53,7 +53,14 @@ export default class PostsService {
     const query = dataSource
       .getRepository(PostsEntity)
       .createQueryBuilder('posts')
-      .select(['posts.id', 'posts.title'])
+      .leftJoinAndSelect('posts.thumbnail', 'thumbnail')
+      .select([
+        'posts.id',
+        'posts.title',
+        'thumbnail.id',
+        'thumbnail.url',
+        'posts.published_at'
+      ])
       .where('posts.status IN(:status)', { status })
       .andWhere('posts.id < :id', { id })
     return query.getOne()
@@ -63,7 +70,14 @@ export default class PostsService {
     const query = dataSource
       .getRepository(PostsEntity)
       .createQueryBuilder('posts')
-      .select(['posts.id', 'posts.title'])
+      .leftJoinAndSelect('posts.thumbnail', 'thumbnail')
+      .select([
+        'posts.id',
+        'posts.title',
+        'thumbnail.id',
+        'thumbnail.url',
+        'posts.published_at'
+      ])
       .where('posts.status IN(:status)', { status })
       .andWhere('posts.id > :id', { id })
     return query.getOne()
@@ -76,6 +90,14 @@ export default class PostsService {
     const query = dataSource
       .getRepository(PostsEntity)
       .createQueryBuilder('posts')
+      .leftJoinAndSelect('posts.thumbnail', 'thumbnail')
+      .select([
+        'posts.id',
+        'posts.title',
+        'thumbnail.id',
+        'thumbnail.url',
+        'posts.published_at'
+      ])
       .where('posts.status IN(:status)', { status })
       .andWhere('posts.id < :id', { id })
       .orderBy('posts.published_at', 'DESC')
@@ -89,6 +111,14 @@ export default class PostsService {
     const query = dataSource
       .getRepository(PostsEntity)
       .createQueryBuilder('posts')
+      .leftJoinAndSelect('posts.thumbnail', 'thumbnail')
+      .select([
+        'posts.id',
+        'posts.title',
+        'thumbnail.id',
+        'thumbnail.url',
+        'posts.published_at'
+      ])
       .where('posts.status IN(:status)', { status })
       .andWhere('posts.id > :id', { id })
       .orderBy('posts.published_at', 'DESC')
@@ -106,22 +136,23 @@ export default class PostsService {
       .createQueryBuilder('posts')
       .leftJoinAndSelect('posts.thumbnail', 'thumbnail')
       .leftJoinAndSelect('posts.city', 'city')
-      // .orderBy('posts.id', 'DESC')
-      .orderBy('posts.published_at', 'DESC')
+      .select([
+        'posts.id',
+        'posts.type',
+        'posts.title',
+        'thumbnail.id',
+        'thumbnail.url',
+        'city.id',
+        'city.name',
+        'posts.published_at'
+      ])
       .where('posts.status IN(:status)', { status })
     if (search !== undefined) {
-      query.orWhere('posts.title like :title', { title: `%${search}%` })
+      query.andWhere('posts.title like :title', { title: `%${search}%` })
     }
-    query.select([
-      'posts.id',
-      'posts.type',
-      'posts.title',
-      'thumbnail.id',
-      'thumbnail.url',
-      'city.id',
-      'city.name',
-      'posts.published_at'
-    ])
+    query
+      // .orderBy('posts.id', 'DESC')
+      .orderBy('posts.published_at', 'DESC')
     if (
       offset !== undefined &&
       typeof offset === 'number' &&

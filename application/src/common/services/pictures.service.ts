@@ -1,5 +1,5 @@
 import { Service } from 'typedi'
-import * as fs from 'fs'
+// import * as fs from 'fs'
 import config from '../../../config'
 import { dataSource } from '../../dataSource'
 import PicturesEntity from '../entities/pictures.entity'

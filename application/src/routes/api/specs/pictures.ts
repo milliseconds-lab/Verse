@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express'
+import { Router, Request, Response } from 'express'
 import { Container } from 'typedi'
 import path from 'path'
 import aws from 'aws-sdk'
@@ -10,7 +10,7 @@ import PicturesService from '../../../common/services/pictures.service'
 import { APIErrorResult, APIResult } from '../APIResult'
 import APIUtils from '../../../utils/APIUtils'
 
-const router = express.Router()
+const router = Router()
 
 /*
  * local 경로에 업로드
@@ -66,6 +66,8 @@ const upload = multer({
   limits: { fileSize: 5 * 1024 * 1024 }
 })
 
+
+/* ---- API - Pictures ---- */
 router.post(
   '/upload',
   upload.single('picture'),
@@ -73,9 +75,9 @@ router.post(
     const service = Container.get(PicturesService)
     try {
       const { id, url } = await service.addUploadFile(req.file)
-      res.json(APIResult({ image: { id, url } }))
+      return res.json(APIResult({ image: { id, url } }))
     } catch (error) {
-      res.status(500).json(APIErrorResult(error.message))
+      return res.status(500).json(APIErrorResult(error.message))
     }
   }
 )
@@ -86,34 +88,31 @@ router.delete('/image/:image_id', (req: Request, res: Response) => {
   const s3DeleteObject = async () => {
     try {
       const picture = await pictureService.getPictureById(id)
-      if (picture !== undefined) {
-        const { stored_path: storedPath, stored_name: storedName } = picture
-        s3.deleteObject(
-          {
-            Bucket: config.S3_BUCKET,
-            Key: `${storedPath}/${storedName}`
-          },
-          (error) => {
-            if (error) {
-              res
-                .status(500)
-                .json(APIErrorResult('Failed to delete S3 Bucket file.'))
-              return
-            }
-            removePicture(picture)
+      const { stored_path: storedPath, stored_name: storedName } = picture
+      s3.deleteObject(
+        {
+          Bucket: config.S3_BUCKET,
+          Key: `${storedPath}/${storedName}`
+        },
+        (error) => {
+          if (error) {
+            return res
+              .status(500)
+              .json(APIErrorResult('Failed to delete a S3 Bucket file.'))
           }
-        )
-      }
+          return removePicture(picture)
+        }
+      )
     } catch (_) {
-      res.status(500).json(APIErrorResult('Image not found.'))
+      return res.status(500).json(APIErrorResult('Image not found.'))
     }
   }
   const removePicture = async (picture: PicturesEntity) => {
     try {
       await pictureService.removePicture(picture)
-      res.json(APIResult({ result: true }))
+      return res.json(APIResult({ result: true }))
     } catch (error) {
-      res.status(500).json(APIErrorResult(error.message))
+      return res.status(500).json(APIErrorResult(error.message))
     }
   }
   return s3DeleteObject()

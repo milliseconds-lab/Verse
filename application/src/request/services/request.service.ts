@@ -31,11 +31,11 @@ export default class RequestService {
         'request.email',
         'request.phone'
       ])
-      .orderBy('request.id', 'DESC')
     if (search !== undefined) {
       query.where('request.name like :name', { name: `%${search}%` })
       query.orWhere('request.message like :message', { message: `%${search}%` })
     }
+    query.orderBy('request.id', 'DESC')
     if (
       offset !== undefined &&
       typeof offset === 'number' &&
@@ -58,8 +58,8 @@ export default class RequestService {
     name: string,
     email: string,
     phone: string,
-    company: string,
-    message: string
+    message: string,
+    company?: string
   ) {
     let request = new RequestEntity()
     request.name = name

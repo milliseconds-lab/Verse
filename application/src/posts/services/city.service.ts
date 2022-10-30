@@ -33,7 +33,13 @@ export default class CityService {
   }
 
   public getCityByName(name: string) {
-    return dataSource.getRepository(CityEntity).findOne({ where: { name } })
+    // return dataSource.getRepository(CityEntity).findOne({ where: { name } })
+    const query = dataSource
+      .getRepository(CityEntity)
+      .createQueryBuilder('city')
+      .select(['city.id', 'city.name'])
+      .where({ name })
+    return query.getOne()
   }
 
   public getCityList(search?: string, offset?: number, limit?: number) {
@@ -41,10 +47,10 @@ export default class CityService {
       .getRepository(CityEntity)
       .createQueryBuilder('city')
       .select(['city.id', 'city.name'])
-      .orderBy('city.id', 'DESC')
     if (search !== undefined) {
       query.where('city.name like :name', { name: `%${search}%` })
     }
+    query.orderBy('city.id', 'DESC')
     if (
       offset !== undefined &&
       typeof offset === 'number' &&

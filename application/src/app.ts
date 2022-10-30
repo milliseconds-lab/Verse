@@ -1,4 +1,4 @@
-import express, { NextFunction, Request, Response } from 'express'
+import express, { Application, NextFunction, Request, Response } from 'express'
 
 require('express-async-errors')
 import path from 'path'
@@ -32,7 +32,7 @@ declare module 'express-session' {
 }
 
 class App {
-  public app: express.Application
+  public app: Application
   public APP_SECRET = config.APP_SECRET
   public static PROJECT_DIR = config.PROJECT_DIR
 
@@ -98,11 +98,11 @@ class App {
     this.app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpecs))
 
     // Error
-    this.app.use((req: express.Request, res: express.Response) => {
+    this.app.use((req: Request, res: Response) => {
       res.render('www/error/notfound')
     })
 
-    this.app.use((err: any, req: express.Request, res: express.Response) => {
+    this.app.use((err: any, req: Request, res: Response) => {
       if (
         err instanceof APIError ||
         (err instanceof Error && req.path.startsWith('/api/'))
@@ -116,8 +116,8 @@ class App {
 
   private static handleApiError(
     err: any,
-    _: express.Request,
-    res: express.Response
+    _: Request,
+    res: Response
   ): void {
     res.status(err.status ? err.status : 500).json({
       success: false,
@@ -128,8 +128,8 @@ class App {
 
   private static handleWebError(
     err: any,
-    req: express.Request,
-    res: express.Response
+    req: Request,
+    res: Response
   ): void {
     res.locals.message = err.message
     res.locals.error = req.app.get('env') === 'development' ? err : {}

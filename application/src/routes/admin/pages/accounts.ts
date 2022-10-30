@@ -1,8 +1,8 @@
-import express, { Request, Response } from 'express'
+import { Router, Request, Response } from 'express'
 import { Container } from 'typedi'
-import UserService from '../../../users/services/user.service'
+import UsersService from '../../../users/services/users.service'
 
-const router = express.Router()
+const router = Router()
 
 /* ---- Admin - Accounts ---- */
 router.get('/login', (req: Request, res: Response) => {
@@ -13,7 +13,7 @@ router.post('/login', async (req: Request, res: Response) => {
   const {
     body: { id, password }
   } = req
-  const service = Container.get(UserService)
+  const service = Container.get(UsersService)
   try {
     let administrator = await service.login(id, password)
     if (administrator !== undefined) {

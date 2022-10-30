@@ -4,19 +4,45 @@ import { dataSource } from '../../dataSource'
 import UsersEntity from '../entities/users.entity'
 
 @Service()
-export default class UserService {
+export default class UsersService {
   public getUserById(id: number) {
     return dataSource.getRepository(UsersEntity).findOne({ where: { id } })
+  }
+
+  public getUserByIdWithActiveStatus(id: number) {
+    const query = dataSource
+      .getRepository(UsersEntity)
+      .createQueryBuilder('users')
+      .select([
+        'users.id',
+        'users.user_id',
+        'users.name',
+        'users.nickname',
+        'users.email',
+        'users.role'
+      ])
+      .where({ status: UsersEntity.STATUS.ACTIVE })
+      .andWhere({ id })
+    return query.getOne()
   }
 
   public getUsersList(search?: string, offset?: number, limit?: number) {
     const query = dataSource
       .getRepository(UsersEntity)
       .createQueryBuilder('users')
-      .orderBy('users.id', 'DESC')
+      .select([
+        'users.id',
+        'users.user_id',
+        'users.name',
+        'users.nickname',
+        'users.email',
+        'users.role'
+      ])
+      .where({ status: UsersEntity.STATUS.ACTIVE })
     if (search !== undefined) {
-      query.where('users.name like :name', { name: `%${search}%` })
+      query.andWhere('users.name like :name', { name: `%${search}%` })
     }
+    query.orderBy('users.id', 'DESC')
     if (
       offset !== undefined &&
       typeof offset === 'number' &&
@@ -35,8 +61,9 @@ export default class UserService {
     const query = dataSource
       .getRepository(UsersEntity)
       .createQueryBuilder('users')
+      .where({ status: UsersEntity.STATUS.ACTIVE })
     if (search !== undefined) {
-      query.where('users.name like :name', { name: `%${search}%` })
+      query.andWhere('users.name like :name', { name: `%${search}%` })
     }
     return query.getCount()
   }
@@ -75,7 +102,13 @@ export default class UserService {
     return user.save()
   }
 
-  public deleteUser(id: number) {
-    return dataSource.getRepository(UsersEntity).delete(id)
+  public removeUser(user: UsersEntity) {
+    return dataSource.getRepository(UsersEntity).remove(user)
+  }
+
+  public withdrawUser(id: number) {
+    return dataSource
+      .getRepository(UsersEntity)
+      .update(id, { status: UsersEntity.STATUS.WITHDRAW })
   }
 }

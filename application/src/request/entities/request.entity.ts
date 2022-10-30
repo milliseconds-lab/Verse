@@ -1,5 +1,5 @@
 import { Column, Entity } from 'typeorm'
-import { IsString } from 'class-validator'
+import {IsOptional, IsString} from 'class-validator'
 import { CoreEntity } from '../../common/entities/core.entity'
 
 @Entity({ name: 'Request' })
@@ -17,7 +17,7 @@ export default class RequestEntity extends CoreEntity {
   phone: string
 
   @Column({ type: 'varchar', nullable: false, default: '' })
-  @IsString()
+  @IsOptional()
   company: string
 
   @Column({ type: 'longtext', nullable: false })

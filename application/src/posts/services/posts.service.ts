@@ -217,13 +217,14 @@ export default class PostsService {
     type: string,
     thumbnail: PicturesEntity,
     title: string,
-    published_at: number,
+    published_at: Date,
     status: string,
     city?: CityEntity,
     image_content?: TypeImagesEntity,
     video_content?: TypeVideosEntity,
     article_content?: TypeArticlesEntity
   ) {
+    console.log(published_at)
     return dataSource.getRepository(PostsEntity).update(id, {
       type,
       thumbnail,

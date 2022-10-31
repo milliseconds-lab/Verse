@@ -82,7 +82,7 @@ router.post(
   }
 )
 
-router.delete('/image/:image_id', (req: Request, res: Response) => {
+router.delete('/image/:image_id', async (req: Request, res: Response) => {
   const id = APIUtils.numberOrThrow(Number(req.params.image_id))
   const pictureService = Container.get(PicturesService)
   const s3DeleteObject = async () => {
@@ -115,7 +115,7 @@ router.delete('/image/:image_id', (req: Request, res: Response) => {
       return res.status(500).json(APIErrorResult(error.message))
     }
   }
-  return s3DeleteObject()
+  return await s3DeleteObject()
 })
 
 export default router

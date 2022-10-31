@@ -10,6 +10,15 @@ export default class PicturesService {
     return dataSource.getRepository(PicturesEntity).findOne({ where: { id } })
   }
 
+  public getPictureByIdAndSelect(id: number) {
+    const query = dataSource
+      .getRepository(PicturesEntity)
+      .createQueryBuilder('pictures')
+      .select(['pictures.id', 'pictures.url'])
+      .where({ id })
+    return query.getOne()
+  }
+
   public addPicture(
     name: string,
     storedName: string,

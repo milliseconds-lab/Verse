@@ -398,6 +398,174 @@
 					"response": []
 				},
 				{
+					"name": "Update Post (Type Image) - Update Image Content",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"type\": \"image\",\n    \"thumbnail\": 1,\n    \"title\": \"update post title\",\n    \"city\": 1,\n    \"image_content\": {\n        \"id\": 1,\n        \"image\": 1,\n        \"title\": \"update image title\",\n        \"description\": \"update image description\"\n    },\n    \"published_at\": 1667174461,\n    \"status\": \"public\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/post/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"post",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Post (Type Image) - New Image Content",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"type\": \"image\",\n    \"thumbnail\": 1,\n    \"title\": \"update post title\",\n    \"city\": 1,\n    \"image_content\": {\n        \"image\": 1,\n        \"title\": \"image title\",\n        \"description\": \"image description\"\n    },\n    \"published_at\": 1667174461,\n    \"status\": \"public\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/post/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"post",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Post (Type Video) - Update Video Content",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"type\": \"video\",\n    \"thumbnail\": 1,\n    \"title\": \"update post title\",\n    \"city\": 1,\n    \"video_content\": {\n        \"id\": 1,\n        \"video_id\": \"video\",\n        \"poster\": 1,\n        \"title\": \"update video title\",\n        \"description\": \"update video description\"\n    },\n    \"published_at\": 1667174461,\n    \"status\": \"public\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/post/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"post",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Post (Type Video) - New Video Content",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"type\": \"video\",\n    \"thumbnail\": 1,\n    \"title\": \"update post title\",\n    \"city\": 1,\n    \"video_content\": {\n        \"video_id\": \"video\",\n        \"poster\": 1,\n        \"title\": \"video title\",\n        \"description\": \"video description\"\n    },\n    \"published_at\": 1667174461,\n    \"status\": \"public\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/post/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"post",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Post (Type Article) - Update Article Content",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"type\": \"article\",\n    \"thumbnail\": 1,\n    \"title\": \"update post title\",\n    \"city\": 1,\n    \"article_content\": {\n        \"id\": 1,\n        \"cover\": 1,\n        \"title\": \"update article title\",\n        \"overview\": \"update article overview\",\n        \"content\": [\n            {\n                \"type\": \"paragraph\",\n                \"text\": \"update text\"\n            },\n            {\n                \"type\": \"figure\",\n                \"image\": 1,\n                \"caption\": \"update caption\"\n            }\n        ]\n    },\n    \"published_at\": 1667174461,\n    \"status\": \"public\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/post/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"post",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Post (Type Article) - New Article Content",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"type\": \"article\",\n    \"thumbnail\": 1,\n    \"title\": \"update post title\",\n    \"city\": 1,\n    \"article_content\": {\n        \"cover\": 1,\n        \"title\": \"article title\",\n        \"overview\": \"article overview\",\n        \"content\": [\n            {\n                \"type\": \"paragraph\",\n                \"text\": \"text\"\n            },\n            {\n                \"type\": \"figure\",\n                \"image\": 1,\n                \"caption\": \"caption\"\n            }\n        ]\n    },\n    \"published_at\": 1667174461,\n    \"status\": \"public\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/post/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"post",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Post Detail",
 					"request": {
 						"method": "GET",

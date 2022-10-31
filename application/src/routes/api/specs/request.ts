@@ -74,4 +74,5 @@ router.delete('/request/:request_id', async (req: Request, res: Response) => {
     return res.status(500).json(APIErrorResult(error.message))
   }
 })
+
 export default router

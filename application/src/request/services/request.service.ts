@@ -44,8 +44,10 @@ export default class RequestService {
       typeof limit === 'number' &&
       limit >= 0
     ) {
-      query.offset(offset)
-      query.limit(limit)
+      // query.offset(offset)
+      // query.limit(limit)
+      query.skip(offset)
+      query.take(limit)
     }
     return query.getMany()
   }

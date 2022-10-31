@@ -53,7 +53,7 @@ export default class PicturesService {
   /*
    * S3 bucket 경로에 업로드
    */
-  public addUploadFile(uploadFile: any) {
+  public addUploadFileWithS3(uploadFile: any) {
     if (uploadFile !== undefined) {
       const { originalname: name, key, location: url, mimetype } = uploadFile
       const storedPath = config.S3_DIRECTORY

@@ -45,14 +45,14 @@ const allowedExtensions = ['.png', '.jpg', '.jpeg', '.bmp']
 
 const storage = multerS3({
   s3,
-  bucket: 'theo-interactive',
+  bucket: config.S3_BUCKET,
   contentType: multerS3.AUTO_CONTENT_TYPE,
   acl: 'public-read',
   metadata: (req, file, callback) => {
     callback(null, { fieldName: file.fieldname })
   },
   key: (req, file, callback) => {
-    const directory = 'verse-ready'
+    const directory = config.S3_DIRECTORY
     const extension = path.extname(file.originalname)
     if (!allowedExtensions.includes(extension)) {
       return callback(new Error('Unsupported extension'))
@@ -74,7 +74,7 @@ router.post(
   async (req: Request, res: Response) => {
     const service = Container.get(PicturesService)
     try {
-      const { id, url } = await service.addUploadFile(req.file)
+      const { id, url } = await service.addUploadFileWithS3(req.file)
       return res.json(APIResult({ image: { id, url } }))
     } catch (error) {
       return res.status(500).json(APIErrorResult(error.message))

@@ -83,7 +83,7 @@ export default class PostsService {
     return query.getOne()
   }
 
-  public getPreviousPostByIdWithOrderByPublishedAt(
+  public getPreviousPostByIdAfterOrderByPublishedAt(
     id: number,
     status = [PostsEntity.STATUS.PUBLIC]
   ) {
@@ -104,7 +104,7 @@ export default class PostsService {
     return query.getOne()
   }
 
-  public getNextPostByIdWithOrderByPublishedAt(
+  public getNextPostByIdAfterOrderByPublishedAt(
     id: number,
     status = [PostsEntity.STATUS.PUBLIC]
   ) {
@@ -161,8 +161,10 @@ export default class PostsService {
       typeof limit === 'number' &&
       limit >= 0
     ) {
-      query.offset(offset)
-      query.limit(limit)
+      // query.offset(offset)
+      // query.limit(limit)
+      query.skip(offset)
+      query.take(limit)
     }
     return query.getMany()
   }
@@ -208,6 +210,31 @@ export default class PostsService {
     }
     post.status = status
     return post.save()
+  }
+
+  public updatePost(
+    id: number,
+    type: string,
+    thumbnail: PicturesEntity,
+    title: string,
+    published_at: number,
+    status: string,
+    city?: CityEntity,
+    image_content?: TypeImagesEntity,
+    video_content?: TypeVideosEntity,
+    article_content?: TypeArticlesEntity
+  ) {
+    return dataSource.getRepository(PostsEntity).update(id, {
+      type,
+      thumbnail,
+      title,
+      city,
+      image_content,
+      video_content,
+      article_content,
+      published_at,
+      status
+    })
   }
 
   public deletePost(id: number) {

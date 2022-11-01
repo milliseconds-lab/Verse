@@ -224,7 +224,6 @@ export default class PostsService {
     video_content?: TypeVideosEntity,
     article_content?: TypeArticlesEntity
   ) {
-    console.log(published_at)
     return dataSource.getRepository(PostsEntity).update(id, {
       type,
       thumbnail,

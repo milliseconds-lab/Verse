@@ -17,8 +17,11 @@ export default class PostsService {
       .leftJoinAndSelect('posts.thumbnail', 'thumbnail')
       .leftJoinAndSelect('posts.city', 'city')
       .leftJoinAndSelect('posts.image_content', 'image_content')
+      .leftJoinAndSelect('image_content.image', 'image_content.image')
       .leftJoinAndSelect('posts.video_content', 'video_content')
+      .leftJoinAndSelect('video_content.poster', 'video_content.poster')
       .leftJoinAndSelect('posts.article_content', 'article_content')
+      .leftJoinAndSelect('article_content.cover', 'article_content.cover')
       .select([
         'posts.id',
         'posts.type',
@@ -30,17 +33,23 @@ export default class PostsService {
         'image_content.id',
         'image_content.title',
         'image_content.description',
-        'image_content.image',
+        // 'image_content.image',
+        'image_content.image.id',
+        'image_content.image.url',
         'video_content.id',
         'video_content.video_id',
         'video_content.title',
         'video_content.description',
-        'video_content.poster',
+        // 'video_content.poster',
+        'video_content.poster.id',
+        'video_content.poster.url',
         'article_content.id',
         'article_content.title',
         'article_content.overview',
         'article_content.content',
-        'article_content.cover',
+        // 'article_content.cover',
+        'article_content.cover.id',
+        'article_content.cover.url',
         'posts.published_at',
         'posts.status'
       ])

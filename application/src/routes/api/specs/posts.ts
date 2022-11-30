@@ -407,7 +407,7 @@ const setPostsData = async (body: any) => {
       content: article_content_data.content
     }
   }
-  const published_at = moment(published_at_unix).toDate()
+  const published_at = moment.unix(published_at_unix).toDate()
   return {
     type,
     thumbnail,

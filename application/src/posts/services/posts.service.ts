@@ -70,8 +70,8 @@ export default class PostsService {
         'thumbnail.url',
         'posts.published_at'
       ])
-      .where('posts.status IN(:status)', { status })
-      .andWhere('posts.id < :id', { id })
+      .where('posts.id < :id', { id })
+      .andWhere('posts.status IN(:status)', { status })
     return query.getOne()
   }
 
@@ -87,8 +87,8 @@ export default class PostsService {
         'thumbnail.url',
         'posts.published_at'
       ])
-      .where('posts.status IN(:status)', { status })
-      .andWhere('posts.id > :id', { id })
+      .where('posts.id > :id', { id })
+      .andWhere('posts.status IN(:status)', { status })
     return query.getOne()
   }
 
@@ -107,8 +107,8 @@ export default class PostsService {
         'thumbnail.url',
         'posts.published_at'
       ])
-      .where('posts.status IN(:status)', { status })
-      .andWhere('posts.id < :id', { id })
+      .where('posts.id < :id', { id })
+      .andWhere('posts.status IN(:status)', { status })
       .orderBy('posts.published_at', 'DESC')
     return query.getOne()
   }
@@ -128,8 +128,8 @@ export default class PostsService {
         'thumbnail.url',
         'posts.published_at'
       ])
-      .where('posts.status IN(:status)', { status })
-      .andWhere('posts.id > :id', { id })
+      .where('posts.id > :id', { id })
+      .andWhere('posts.status IN(:status)', { status })
       .orderBy('posts.published_at', 'DESC')
     return query.getOne()
   }

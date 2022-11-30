@@ -42,22 +42,23 @@ export default class PicturesService {
   /*
    * local 경로에 업로드
    */
-  // public addUploadFile(uploadFile: any) {
-  //   if (uploadFile !== undefined) {
-  //     let url = `${uploadFile.destination}/${uploadFile.filename}`
-  //     let idx = uploadFile.destination.lastIndexOf('public/')
-  //     if (idx >= 0) {
-  //       url = url.substring(idx + 6)
-  //     }
-  //     return this.addPicture(
-  //       uploadFile.originalname,
-  //       uploadFile.filename,
-  //       uploadFile.destination,
-  //       url,
-  //       uploadFile.mimetype
-  //     )
-  //   }
-  // }
+  public addUploadFile(uploadFile: any) {
+    if (uploadFile !== undefined) {
+      const {
+        originalname: name,
+        destination: storedPath,
+        filename: storedName,
+        mimetype
+      } = uploadFile
+
+      let url = `${storedPath}/${storedName}`
+      const idx = storedPath.lastIndexOf('public/')
+      if (idx >= 0) {
+        url = url.substring(idx + 6)
+      }
+      return this.addPicture(name, storedName, storedPath, url, mimetype)
+    }
+  }
 
   /*
    * S3 bucket 경로에 업로드
